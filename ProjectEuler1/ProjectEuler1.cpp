@@ -7,9 +7,9 @@
 #include <string>
 #include <vector>
 #include <algorithm>
+#include <fstream>
 
-
-bool IsPrime(long long unsigned int nr);	// Problem 3
+bool IsPrime(long long unsigned int nr);
 bool IsPalindromic(int product);			// Problem 4
 
 int main()
@@ -184,15 +184,62 @@ int main()
 	printf("Result: %lld \n", sum); // 1179908154
 	*/
 	
-	/* Problem 11 */
+	/* Problem 11 
+	std::ifstream in;
+	in.open("numbers.txt");
+	int numbersArray[20][20];
+	for (int i = 0; i < 20; i++) {
+		for (int j = 0; j < 20; j++) {
+			in >> numbersArray[i][j];
+		}
+	}
+	long long int max = 0;
+	long long int up = 1, left = 1, diagR = 1, diagL = 1;
+	int row = 0, colomun = 0;
+	for (int i = 0; i < 20; i++) {
+		for (int j = 0; j < 20; j++) {
+			for (int k = 0; k < 4; k++) {
+				if(i + 3 < 20)
+					up *= numbersArray[i + k][j];
+				if(j + 3 < 20)
+					left *= numbersArray[i][j + k];
+				if(i + 3 < 20 && j + 3 < 20)
+					diagR *= numbersArray[i + k][j + k];
+				if (i + 3 < 20 && j - 3 > 0)
+					diagL *= numbersArray[i + k][j - k];
+			}
+			if (up > max) {
+				max = up;
+				row = i;
+				colomun = j;
+			}
+			if (left > max) {
+				max = left;
+				row = i;
+				colomun = j;
+			}
+			if (diagR > max) {
+				max = diagR;
+				row = i;
+				colomun = j;
+			}
+			if (diagL > max) {
+				max = diagL;
+				row = i;
+				colomun = j;
+			}
+			up = 1; left = 1; diagR = 1; diagL = 1;
+		}
+	}
+	printf("Result: %lld %d %d ", max, row, colomun);
+	*/
+
+	/* Problem 12 */
 	
 
-
-	
 	return 0;
 }
 
-// Problem 3
 bool IsPrime(long long unsigned int nr) {
 	if (nr < 2) {
 		return false;
